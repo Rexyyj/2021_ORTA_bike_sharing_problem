@@ -8,17 +8,17 @@ from solver.sampler import Sampler
 import numpy as np
 
 config ={
-    "staNum":22,
+    "staNum":5,
     "staCap":30,
     "bikeCost":2,
-    "stockOutCost":4,
-    "tWastCost":8,
-    "transhipCost":1,
+    "stockOutCost":2,
+    "tWastCost":4,
+    "transhipCost":2,
 }
 
 sampler = Sampler()
 
-prob,data_source = sampler.sample_demand(100,config)
+prob,data_source = sampler.sample_normal(100,config)
 
 model = TwoStageMode(100,config,data_source,prob)
 model.solve()
