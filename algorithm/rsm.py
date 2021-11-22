@@ -28,7 +28,6 @@ class RSM():
 
 
     def rsm_solver(self,basis):
-        print(basis)
         mask = list(set(self.base)-set(basis))
         B = np.zeros((len(self.base),len(self.base)))
         for pos in basis:
