@@ -17,6 +17,7 @@ class RSM():
 
         self.opt_pi = None
         self.opt_x = None
+        self.obj_min = None
 
 
 
@@ -25,6 +26,7 @@ class RSM():
         for i in range(len(self.A)):
             basis.append(i)
         self.opt_pi ,self.opt_x = self.rsm_solver(basis)
+        self.obj_min = np.matmul(self.c[0:len(self.opt_x)],np.transpose(self.opt_x))
 
 
     def rsm_solver(self,basis):
@@ -38,7 +40,7 @@ class RSM():
         ## ToDo: Imporve the basis update method
         if np.linalg.matrix_rank(AB)!= len(AB):
             basis[random.randint(0,len(basis)-1)] = mask[random.randint(0,len(mask)-1)]
-            basis.sort()
+            #basis.sort()
             return self.rsm_solver(basis)
         
 
@@ -63,7 +65,7 @@ class RSM():
             if neg_cost_pos!=-1:
                 mini_pos = self.minimum_ratio_test(neg_cost_pos,ABinv,xB)
                 basis[mini_pos]=neg_cost_pos
-                basis.sort()
+                #basis.sort()
                 return self.rsm_solver(basis)
             else:
                 return pi,xB
@@ -98,11 +100,12 @@ class RSM():
 
 if __name__ == "__main__":
     A = np.array([[6,10,1,0,0,0],[8,5,0,1,0,0],[1,0,0,0,1,0],[0,1,0,0,0,1]])
-    b = np.array([2400,1600,500,100])
-    c =np.array([-24,-28,0,0,0,0])
+    b = np.array([2400,1600,300,300])
+    c =np.array([-28,-32,0,0,0,0])
 
 
     rsm = RSM(A,b,c)
     rsm.rsm()
     print(rsm.opt_pi)
     print(rsm.opt_x)
+    print(rsm.obj_min)

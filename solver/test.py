@@ -1,8 +1,14 @@
-import numpy as np
+from numpy.lib.function_base import append
 
-data = np.around(np.abs(np.random.normal(
-    10,
-    5,
-    size=(5,5))
-))
-print(data)
+
+test = "60"
+sp = test.split("*")
+print(sp)
+result = []
+for s in sp:
+    try:
+        temp = int(s)
+        result.append(temp)
+    except:
+        result.append(s)
+print(result)
